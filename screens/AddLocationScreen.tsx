@@ -10,9 +10,10 @@ import {
 } from "react-native";
 
 import Button from "../components/Button";
-import Fontisto from "@expo/vector-icons/Fontisto";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
+import WeatherIcon from "../components/WeatherIcon";
+import WeatherType from "../types/WeatherType";
 
 const NUM_KEYBOARD = Platform.OS === 'android' ? 'decimal-pad' : 'numbers-and-punctuation';
 
@@ -35,7 +36,7 @@ export default function AddLocationScreen() {
                 <ScrollView horizontal>
                   <View style={styles.conditionIcons}>
                     <TouchableOpacity style={styles.conditionIcon}>
-                      <Fontisto name="day-sunny" size={25} />
+                      <WeatherIcon type={WeatherType.SUNNY} size={25} />
                     </TouchableOpacity>
                     <TouchableOpacity
                       style={[
@@ -43,19 +44,19 @@ export default function AddLocationScreen() {
                         styles.conditionIconSelected,
                       ]}
                     >
-                      <Fontisto name="day-cloudy" size={25} />
+                      <WeatherIcon type={WeatherType.PARTLY_SUNNY} size={25} />
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.conditionIcon}>
-                      <Fontisto name="cloudy" size={25} />
+                      <WeatherIcon type={WeatherType.CLOUDY} size={25} />
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.conditionIcon}>
-                      <Fontisto name="rain" size={25} />
+                      <WeatherIcon type={WeatherType.RAINY} size={25} />
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.conditionIcon}>
-                      <Fontisto name="lightning" size={25} />
+                      <WeatherIcon type={WeatherType.THUNDERSTORM} size={25} />
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.conditionIcon}>
-                      <Fontisto name="snow" size={25} />
+                      <WeatherIcon type={WeatherType.SNOW} size={25} />
                     </TouchableOpacity>
                   </View>
                 </ScrollView>

@@ -7,10 +7,12 @@ import {
   View,
 } from "react-native";
 
+import Button from "../components/Button";
 import Fontisto from "@expo/vector-icons/Fontisto";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
-import Button from "../components/Button";
+import WeatherIcon from "../components/WeatherIcon";
+import WeatherType from "../types/WeatherType";
 
 export default function App() {
   return (
@@ -24,7 +26,11 @@ export default function App() {
         <SafeAreaView style={styles.container}>
           <Button label="Calgary, AB" palette="light" style={styles.button} />
           <View style={styles.weatherInfo}>
-            <Fontisto name="day-cloudy" size={150} style={styles.icon} />
+            <WeatherIcon
+              type={WeatherType.PARTLY_SUNNY}
+              size={150}
+              style={styles.icon}
+            />
             <Text style={styles.conditionText}>Partly sunny</Text>
             <Text style={styles.temperatureText}>11°C</Text>
           </View>
