@@ -9,6 +9,7 @@ import {
   View,
 } from "react-native";
 
+import Button from "../components/Button";
 import Fontisto from "@expo/vector-icons/Fontisto";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
@@ -66,9 +67,11 @@ export default function AddLocationScreen() {
               <Text style={styles.label}>Longitude</Text>
               <TextInput keyboardType={NUM_KEYBOARD} style={[styles.inputBox, styles.input]} />
             </View>
-            <TouchableOpacity style={styles.button}>
-              <Text style={styles.buttonText}>Verify & Submit</Text>
-            </TouchableOpacity>
+            <Button
+              label="Verify & Submit"
+              palette="dark"
+              style={styles.button}
+            />
           </ScrollView>
         </KeyboardAvoidingView>
       </SafeAreaView>
@@ -133,15 +136,6 @@ const styles = StyleSheet.create({
     borderRadius: 28,
   },
   button: {
-    backgroundColor: "black",
-    borderRadius: 10,
-    alignItems: "center",
-    justifyContent: "center",
-    height: 50,
     marginTop: 30,
-  },
-  buttonText: {
-    color: "white",
-    fontSize: 17,
   },
 });

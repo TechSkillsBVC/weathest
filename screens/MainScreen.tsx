@@ -10,6 +10,7 @@ import {
 import Fontisto from "@expo/vector-icons/Fontisto";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
+import Button from "../components/Button";
 
 export default function App() {
   return (
@@ -21,9 +22,7 @@ export default function App() {
       >
         <StatusBar style="light" />
         <SafeAreaView style={styles.container}>
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Calgary, AB</Text>
-          </TouchableOpacity>
+          <Button label="Calgary, AB" palette="light" style={styles.button} />
           <View style={styles.weatherInfo}>
             <Fontisto name="day-cloudy" size={150} style={styles.icon} />
             <Text style={styles.conditionText}>Partly sunny</Text>
@@ -45,7 +44,7 @@ export default function App() {
           </View>
         </SafeAreaView>
       </ImageBackground>
-      <Modal animationType="fade" transparent={true} visible={true}>
+      <Modal animationType="fade" transparent={true} visible={false}>
         <View style={styles.modal}>
           <View style={styles.modalOptions}>
             <Text style={styles.modalOptionsHeader}>Locations</Text>
@@ -84,15 +83,6 @@ const styles = StyleSheet.create({
   },
   button: {
     alignSelf: "stretch",
-    backgroundColor: "white",
-    borderRadius: 10,
-    alignItems: "center",
-    justifyContent: "center",
-    height: 50,
-  },
-  buttonText: {
-    color: "black",
-    fontSize: 17,
   },
   weatherInfo: {
     marginBottom: 160,
