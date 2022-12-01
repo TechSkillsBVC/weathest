@@ -12,6 +12,7 @@ import Fontisto from "@expo/vector-icons/Fontisto";
 import Location from "../types/Location";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
+import UnitToggle from "../components/UnitToggle";
 import WeatherInfo from "../components/WeatherInfo";
 import WeatherType from "../types/WeatherType";
 
@@ -35,16 +36,7 @@ export default function MainScreen() {
         <SafeAreaView style={styles.container}>
           <Button label={location.name} palette="light" style={styles.button} />
           <WeatherInfo location={location} style={styles.weatherInfo} />
-          <TouchableOpacity style={styles.unitToggle}>
-            <View style={styles.toggleOption}>
-              <Text style={styles.toggleText}>°F</Text>
-            </View>
-            <View style={[styles.toggleOption, styles.selectedToggleOption]}>
-              <Text style={[styles.toggleText, styles.selectedToggleText]}>
-                °C
-              </Text>
-            </View>
-          </TouchableOpacity>
+          <UnitToggle value="C" />
           <View style={styles.footer}>
             <Text style={styles.footerTitle}>Captured at</Text>
             <Text style={styles.footerText}>
@@ -95,24 +87,6 @@ const styles = StyleSheet.create({
   },
   weatherInfo: {
     marginBottom: 160,
-  },
-  unitToggle: {
-    flexDirection: "row",
-  },
-  toggleOption: {
-    borderRadius: 8,
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-  },
-  selectedToggleOption: {
-    backgroundColor: "white",
-  },
-  toggleText: {
-    color: "white",
-    fontSize: 18,
-  },
-  selectedToggleText: {
-    color: "black",
   },
   footer: {
     alignItems: "center",
