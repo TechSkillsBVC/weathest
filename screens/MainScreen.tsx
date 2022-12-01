@@ -9,12 +9,21 @@ import {
 
 import Button from "../components/Button";
 import Fontisto from "@expo/vector-icons/Fontisto";
+import Location from "../types/Location";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
-import WeatherIcon from "../components/WeatherIcon";
+import WeatherInfo from "../components/WeatherInfo";
 import WeatherType from "../types/WeatherType";
 
-export default function App() {
+export default function MainScreen() {
+  const location: Location = {
+    name: "Calgary, AB",
+    temperatureInCelsius: 11,
+    weatherType: WeatherType.PARTLY_SUNNY,
+    latitude: 51.0469212,
+    longitude: -114.0559973,
+  };
+
   return (
     <>
       <ImageBackground
@@ -24,16 +33,8 @@ export default function App() {
       >
         <StatusBar style="light" />
         <SafeAreaView style={styles.container}>
-          <Button label="Calgary, AB" palette="light" style={styles.button} />
-          <View style={styles.weatherInfo}>
-            <WeatherIcon
-              type={WeatherType.PARTLY_SUNNY}
-              size={150}
-              style={styles.icon}
-            />
-            <Text style={styles.conditionText}>Partly sunny</Text>
-            <Text style={styles.temperatureText}>11°C</Text>
-          </View>
+          <Button label={location.name} palette="light" style={styles.button} />
+          <WeatherInfo location={location} style={styles.weatherInfo} />
           <TouchableOpacity style={styles.unitToggle}>
             <View style={styles.toggleOption}>
               <Text style={styles.toggleText}>°F</Text>
@@ -46,7 +47,9 @@ export default function App() {
           </TouchableOpacity>
           <View style={styles.footer}>
             <Text style={styles.footerTitle}>Captured at</Text>
-            <Text style={styles.footerText}>(51.0469212, -114.0559973)</Text>
+            <Text style={styles.footerText}>
+              {`(${location.latitude}, ${location.longitude})`}
+            </Text>
           </View>
         </SafeAreaView>
       </ImageBackground>
@@ -92,20 +95,6 @@ const styles = StyleSheet.create({
   },
   weatherInfo: {
     marginBottom: 160,
-    alignItems: "center",
-  },
-  icon: {
-    color: "white",
-  },
-  conditionText: {
-    color: "white",
-    fontSize: 16,
-    marginTop: 20,
-    marginBottom: 5,
-  },
-  temperatureText: {
-    color: "white",
-    fontSize: 30,
   },
   unitToggle: {
     flexDirection: "row",
