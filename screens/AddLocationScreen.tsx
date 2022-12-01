@@ -8,16 +8,16 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 import Fontisto from "@expo/vector-icons/Fontisto";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 
 const NUM_KEYBOARD = Platform.OS === 'android' ? 'decimal-pad' : 'numbers-and-punctuation';
 
 export default function AddLocationScreen() {
   return (
-    <SafeAreaProvider>
+    <>
       <StatusBar style="dark" />
       <SafeAreaView style={styles.container}>
         <KeyboardAvoidingView
@@ -72,7 +72,7 @@ export default function AddLocationScreen() {
           </ScrollView>
         </KeyboardAvoidingView>
       </SafeAreaView>
-    </SafeAreaProvider>
+    </>
   );
 }
 
