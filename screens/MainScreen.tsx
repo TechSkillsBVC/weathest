@@ -3,18 +3,20 @@ import {
   SelectorModal,
   SelectorModalOption,
 } from "../components/SelectorModal";
+import { useContext, useState } from "react";
 
 import Button from "../components/Button";
 import Fontisto from "@expo/vector-icons/Fontisto";
 import Location from "../types/Location";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
+import TemperatureUnitContext from "../context/TemperatureUnitContext";
 import UnitToggle from "../components/UnitToggle";
 import WeatherInfo from "../components/WeatherInfo";
 import WeatherType from "../types/WeatherType";
-import { useState } from "react";
 
 export default function MainScreen() {
+  const temperatureUnit = useContext(TemperatureUnitContext);
   const [location, setLocation] = useState<Location>({
     name: "Calgary, AB",
     temperatureInCelsius: 11,
@@ -34,7 +36,7 @@ export default function MainScreen() {
         <SafeAreaView style={styles.container}>
           <Button label={location.name} palette="light" style={styles.button} />
           <WeatherInfo location={location} style={styles.weatherInfo} />
-          <UnitToggle value="C" />
+          <UnitToggle value={temperatureUnit} />
           <View style={styles.footer}>
             <Text style={styles.footerTitle}>Captured at</Text>
             <Text style={styles.footerText}>

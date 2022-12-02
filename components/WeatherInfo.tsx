@@ -1,8 +1,11 @@
 import { StyleSheet, Text, View, ViewProps } from "react-native";
 
 import Location from "../types/Location";
+import TemperatureUnit from "../types/TemperatureUnit";
+import TemperatureUnitContext from "../context/TemperatureUnitContext";
 import WeatherIcon from "./WeatherIcon";
 import WeatherType from "../types/WeatherType";
+import { useContext } from "react";
 
 export type WeatherInfoProps = {
   location: Omit<Location, "latitude" | "longitude">;
@@ -11,6 +14,7 @@ export type WeatherInfoProps = {
 
 export default function WeatherInfo(props: WeatherInfoProps) {
   const { location } = props;
+  const temperatureUnit = useContext(TemperatureUnitContext);
 
   return (
     <View style={[styles.container, props.style]}>
@@ -19,7 +23,7 @@ export default function WeatherInfo(props: WeatherInfoProps) {
         {getConditionsText(location.weatherType)}
       </Text>
       <Text style={styles.temperature}>
-        {formatTemperature(location.temperatureInCelsius)}
+        {formatTemperature(location.temperatureInCelsius, temperatureUnit)}
       </Text>
     </View>
   );
@@ -63,6 +67,9 @@ function getConditionsText(condition: WeatherType) {
   }
 }
 
-function formatTemperature(measuementInCelsius: number) {
-  return `${Math.round(measuementInCelsius)}°C`;
+function formatTemperature(
+  measuementInCelsius: number,
+  temperatureUnit: TemperatureUnit
+) {
+  return `${Math.round(measuementInCelsius)}°${temperatureUnit}`;
 }

@@ -13,10 +13,14 @@ import Button from "../components/Button";
 import NumberInput from "../components/NumberInput";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
+import TemperatureUnitContext from "../context/TemperatureUnitContext";
 import WeatherIcon from "../components/WeatherIcon";
 import WeatherType from "../types/WeatherType";
+import { useContext } from "react";
 
 export default function AddLocationScreen() {
+  const temperatureUnit = useContext(TemperatureUnitContext);
+
   return (
     <>
       <StatusBar style="dark" />
@@ -60,7 +64,7 @@ export default function AddLocationScreen() {
                   </View>
                 </ScrollView>
               </View>
-              <Text style={styles.label}>Temperature (°C)</Text>
+              <Text style={styles.label}>Temperature (°{temperatureUnit})</Text>
               <NumberInput style={[styles.inputBox, styles.input]} />
               <Text style={styles.label}>Latitude</Text>
               <NumberInput style={[styles.inputBox, styles.input]} />
