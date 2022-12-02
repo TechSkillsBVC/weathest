@@ -12,15 +12,16 @@ import { StatusBar } from "expo-status-bar";
 import UnitToggle from "../components/UnitToggle";
 import WeatherInfo from "../components/WeatherInfo";
 import WeatherType from "../types/WeatherType";
+import { useState } from "react";
 
 export default function MainScreen() {
-  const location: Location = {
+  const [location, setLocation] = useState<Location>({
     name: "Calgary, AB",
     temperatureInCelsius: 11,
     weatherType: WeatherType.PARTLY_SUNNY,
     latitude: 51.0469212,
     longitude: -114.0559973,
-  };
+  });
 
   return (
     <>
@@ -42,7 +43,7 @@ export default function MainScreen() {
           </View>
         </SafeAreaView>
       </ImageBackground>
-      <SelectorModal header="Locations" visible={true}>
+      <SelectorModal header="Locations" visible={false}>
         <SelectorModalOption>
           <Text>Add new</Text>
           <Fontisto name="plus-a" size={15} />
