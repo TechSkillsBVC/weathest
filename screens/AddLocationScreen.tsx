@@ -11,7 +11,6 @@ import {
 
 import Button from "../components/Button";
 import NumberInput from "../components/NumberInput";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import TemperatureUnitContext from "../context/TemperatureUnitContext";
 import WeatherIcon from "../components/WeatherIcon";
@@ -24,7 +23,7 @@ export default function AddLocationScreen() {
   return (
     <>
       <StatusBar style="dark" />
-      <SafeAreaView style={styles.container}>
+      <View style={styles.container}>
         <KeyboardAvoidingView
           style={styles.keyboardAvoidingView}
           behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -78,7 +77,7 @@ export default function AddLocationScreen() {
             />
           </ScrollView>
         </KeyboardAvoidingView>
-      </SafeAreaView>
+      </View>
     </>
   );
 }
@@ -86,7 +85,8 @@ export default function AddLocationScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingVertical: 20,
+    paddingTop: 10,
+    paddingBottom: 40,
     backgroundColor: "#eee",
   },
   keyboardAvoidingView: {

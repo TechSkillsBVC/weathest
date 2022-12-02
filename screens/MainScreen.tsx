@@ -8,6 +8,8 @@ import { useContext, useState } from "react";
 import Button from "../components/Button";
 import Fontisto from "@expo/vector-icons/Fontisto";
 import Location from "../types/Location";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import Routes from "../routes";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import TemperatureUnitContext from "../context/TemperatureUnitContext";
@@ -15,7 +17,9 @@ import UnitToggle from "../components/UnitToggle";
 import WeatherInfo from "../components/WeatherInfo";
 import WeatherType from "../types/WeatherType";
 
-export default function MainScreen() {
+export default function MainScreen(props: NativeStackScreenProps<any>) {
+  const { navigation } = props;
+
   const temperatureUnit = useContext(TemperatureUnitContext);
   const [showModal, setShowModal] = useState(false);
   const [location, setLocation] = useState<Location>({
@@ -28,6 +32,7 @@ export default function MainScreen() {
 
   const openModal = () => setShowModal(true);
   const closeModal = () => setShowModal(false);
+  const addLocation = () => navigation.navigate(Routes.ADD_LOCATION);
 
   return (
     <>
@@ -59,11 +64,11 @@ export default function MainScreen() {
         visible={showModal}
         onClose={closeModal}
       >
-        <SelectorModalOption>
+        <SelectorModalOption onPress={addLocation}>
           <Text>Add new</Text>
           <Fontisto name="plus-a" size={15} />
         </SelectorModalOption>
-        <SelectorModalOption>
+        <SelectorModalOption onPress={() => {}}>
           <Text>Calgary, AB</Text>
         </SelectorModalOption>
       </SelectorModal>

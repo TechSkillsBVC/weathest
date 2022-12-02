@@ -32,15 +32,16 @@ export function SelectorModal(props: SelectorModalProps) {
 
 type SelectorModalOptionProps = {
   children: ReactNode;
+  onPress: () => void;
 };
 
 export function SelectorModalOption(props: SelectorModalOptionProps) {
-  const { children } = props;
+  const { children, onPress } = props;
 
   return (
     <>
       <View style={styles.separator} />
-      <TouchableOpacity style={styles.row}>
+      <TouchableOpacity style={styles.row} onPress={onPress}>
         {children}
       </TouchableOpacity>
     </>
