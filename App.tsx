@@ -1,30 +1,30 @@
-import { useEffect, useState } from "react";
+import TemperatureUnitContext, {
+  TemperatureUnitContextObject,
+} from "./context/TemperatureUnitContext";
 
 import AddLocationScreen from "./screens/AddLocationScreen";
 import MainScreen from "./screens/MainScreen";
 import { NavigationContainer } from "@react-navigation/native";
+import Routes from "./routes";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import TemperatureUnit from "./types/TemperatureUnit";
-import TemperatureUnitContext from "./context/TemperatureUnitContext";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Routes from "./routes";
+import { useState } from "react";
 
 export default function App() {
   const [temperatureUnit, setTemperatureUnit] = useState<TemperatureUnit>("C");
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setTemperatureUnit("F");
-    }, 4000);
-    return () => clearTimeout(timer);
-  }, []);
+  const temperatureUnitContextObj: TemperatureUnitContextObject = {
+    value: temperatureUnit,
+    setValue: setTemperatureUnit,
+  };
 
   const Stack = createNativeStackNavigator();
 
   return (
     <NavigationContainer>
       <SafeAreaProvider>
-        <TemperatureUnitContext.Provider value={temperatureUnit}>
+        <TemperatureUnitContext.Provider value={temperatureUnitContextObj}>
           <Stack.Navigator initialRouteName="Home">
             <Stack.Screen
               name={Routes.MAIN}

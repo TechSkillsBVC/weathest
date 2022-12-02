@@ -50,7 +50,10 @@ export default function MainScreen(props: NativeStackScreenProps<any>) {
             onPress={openModal}
           />
           <WeatherInfo location={location} style={styles.weatherInfo} />
-          <UnitToggle value={temperatureUnit} />
+          <UnitToggle
+            value={temperatureUnit.value}
+            onChange={temperatureUnit.setValue}
+          />
           <View style={styles.footer}>
             <Text style={styles.footerTitle}>Captured at</Text>
             <Text style={styles.footerText}>

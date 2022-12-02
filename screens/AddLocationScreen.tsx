@@ -65,7 +65,9 @@ export default function AddLocationScreen() {
                   </View>
                 </ScrollView>
               </View>
-              <Text style={styles.label}>Temperature (°{temperatureUnit})</Text>
+              <Text style={styles.label}>
+                Temperature (°{temperatureUnit.value})
+              </Text>
               <NumberInput style={[styles.inputBox, styles.input]} />
               <Text style={styles.label}>Latitude</Text>
               <NumberInput style={[styles.inputBox, styles.input]} />

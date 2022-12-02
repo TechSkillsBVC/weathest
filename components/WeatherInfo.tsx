@@ -24,7 +24,10 @@ export default function WeatherInfo(props: WeatherInfoProps) {
         {getConditionsText(location.weatherType)}
       </Text>
       <Text style={styles.temperature}>
-        {formatTemperature(location.temperatureInCelsius, temperatureUnit)}
+        {formatTemperature(
+          location.temperatureInCelsius,
+          temperatureUnit.value
+        )}
       </Text>
     </View>
   );

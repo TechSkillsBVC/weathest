@@ -4,12 +4,18 @@ import TemperatureUnit from "../types/TemperatureUnit";
 
 type UnitToggleProps = {
   value: TemperatureUnit;
+  onChange?: (newValue: TemperatureUnit) => void;
 };
 export default function UnitToggle(props: UnitToggleProps) {
-  const { value } = props;
+  const { value, onChange } = props;
+
+  const onPress = () => {
+    const newValue = value === "C" ? "F" : "C";
+    onChange?.(newValue);
+  };
 
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={onPress}>
       <View style={[styles.option, value === "F" && styles.selectedOption]}>
         <Text style={[styles.text, value === "F" && styles.selectedText]}>
           °F
@@ -32,6 +38,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     paddingVertical: 10,
     paddingHorizontal: 15,
+    overflow: "hidden",
   },
   selectedOption: {
     backgroundColor: "white",
