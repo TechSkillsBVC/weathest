@@ -5,6 +5,7 @@ import TemperatureUnit from "../types/TemperatureUnit";
 import TemperatureUnitContext from "../context/TemperatureUnitContext";
 import WeatherIcon from "./WeatherIcon";
 import WeatherType from "../types/WeatherType";
+import { toFahrenheit } from "../utils/temperature";
 import { useContext } from "react";
 
 export type WeatherInfoProps = {
@@ -68,8 +69,17 @@ function getConditionsText(condition: WeatherType) {
 }
 
 function formatTemperature(
-  measuementInCelsius: number,
+  measurementInCelsius: number,
   temperatureUnit: TemperatureUnit
 ) {
-  return `${Math.round(measuementInCelsius)}°${temperatureUnit}`;
+  switch (temperatureUnit) {
+    case "C":
+      return `${Math.round(measurementInCelsius)}°${temperatureUnit}`;
+    case "F":
+      return `${Math.round(
+        toFahrenheit(measurementInCelsius)
+      )}°${temperatureUnit}`;
+    default:
+      throw Error(`Unexpected unit "${temperatureUnit}"`);
+  }
 }
