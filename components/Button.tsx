@@ -8,14 +8,14 @@ import {
 type ButtonProps = {
   label: string;
   palette: "light" | "dark";
-  style?: TouchableOpacityProps["style"];
-};
+} & TouchableOpacityProps;
 
 export default function Button(props: ButtonProps) {
-  const { label, palette } = props;
+  const { label, palette, ...rest } = props;
 
   return (
     <TouchableOpacity
+      {...rest}
       style={[
         styles.container,
         { backgroundColor: palette === "dark" ? "black" : "white" },

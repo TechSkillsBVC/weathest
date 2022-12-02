@@ -5,10 +5,11 @@ type SelectorModalProps = {
   header: string;
   visible: boolean;
   children: ReactNode;
+  onClose?: () => void;
 };
 
 export function SelectorModal(props: SelectorModalProps) {
-  const { header, visible, children } = props;
+  const { header, visible, children, onClose } = props;
 
   return (
     <Modal animationType="fade" transparent={true} visible={visible}>
@@ -17,7 +18,10 @@ export function SelectorModal(props: SelectorModalProps) {
           <Text style={styles.header}>{header}</Text>
           {children}
           <View style={styles.separator} />
-          <TouchableOpacity style={[styles.row, styles.closeRow]}>
+          <TouchableOpacity
+            style={[styles.row, styles.closeRow]}
+            onPress={onClose}
+          >
             <Text style={styles.closeText}>Close</Text>
           </TouchableOpacity>
         </View>

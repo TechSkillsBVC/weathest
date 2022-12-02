@@ -17,6 +17,7 @@ import WeatherType from "../types/WeatherType";
 
 export default function MainScreen() {
   const temperatureUnit = useContext(TemperatureUnitContext);
+  const [showModal, setShowModal] = useState(false);
   const [location, setLocation] = useState<Location>({
     name: "Calgary, AB",
     temperatureInCelsius: 11,
@@ -24,6 +25,9 @@ export default function MainScreen() {
     latitude: 51.0469212,
     longitude: -114.0559973,
   });
+
+  const openModal = () => setShowModal(true);
+  const closeModal = () => setShowModal(false);
 
   return (
     <>
@@ -34,7 +38,12 @@ export default function MainScreen() {
       >
         <StatusBar style="light" />
         <SafeAreaView style={styles.container}>
-          <Button label={location.name} palette="light" style={styles.button} />
+          <Button
+            label={location.name}
+            palette="light"
+            style={styles.button}
+            onPress={openModal}
+          />
           <WeatherInfo location={location} style={styles.weatherInfo} />
           <UnitToggle value={temperatureUnit} />
           <View style={styles.footer}>
@@ -45,7 +54,11 @@ export default function MainScreen() {
           </View>
         </SafeAreaView>
       </ImageBackground>
-      <SelectorModal header="Locations" visible={false}>
+      <SelectorModal
+        header="Locations"
+        visible={showModal}
+        onClose={closeModal}
+      >
         <SelectorModalOption>
           <Text>Add new</Text>
           <Fontisto name="plus-a" size={15} />
