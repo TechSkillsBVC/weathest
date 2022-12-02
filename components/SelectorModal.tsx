@@ -1,5 +1,8 @@
 import { Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import React, { ReactNode } from "react";
+import React, { ReactNode, createContext, useContext } from "react";
+
+type SelectorModalContextObj = { onClose?: () => void };
+export const SelectorModalContext = createContext<SelectorModalContextObj>({});
 
 type SelectorModalProps = {
   header: string;
@@ -12,21 +15,23 @@ export function SelectorModal(props: SelectorModalProps) {
   const { header, visible, children, onClose } = props;
 
   return (
-    <Modal animationType="fade" transparent={true} visible={visible}>
-      <View style={styles.wrapper}>
-        <View style={styles.container}>
-          <Text style={styles.header}>{header}</Text>
-          {children}
-          <View style={styles.separator} />
-          <TouchableOpacity
-            style={[styles.row, styles.closeRow]}
-            onPress={onClose}
-          >
-            <Text style={styles.closeText}>Close</Text>
-          </TouchableOpacity>
+    <SelectorModalContext.Provider value={{ onClose }}>
+      <Modal animationType="none" transparent={true} visible={visible}>
+        <View style={styles.wrapper}>
+          <View style={styles.container}>
+            <Text style={styles.header}>{header}</Text>
+            {children}
+            <View style={styles.separator} />
+            <TouchableOpacity
+              style={[styles.row, styles.closeRow]}
+              onPress={onClose}
+            >
+              <Text style={styles.closeText}>Close</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
-    </Modal>
+      </Modal>
+    </SelectorModalContext.Provider>
   );
 }
 
@@ -37,11 +42,17 @@ type SelectorModalOptionProps = {
 
 export function SelectorModalOption(props: SelectorModalOptionProps) {
   const { children, onPress } = props;
+  const contextObj = useContext(SelectorModalContext);
+
+  const callOnPressAndClose = () => {
+    onPress();
+    contextObj.onClose?.();
+  };
 
   return (
     <>
       <View style={styles.separator} />
-      <TouchableOpacity style={styles.row} onPress={onPress}>
+      <TouchableOpacity style={styles.row} onPress={callOnPressAndClose}>
         {children}
       </TouchableOpacity>
     </>
