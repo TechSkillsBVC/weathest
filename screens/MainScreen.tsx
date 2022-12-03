@@ -1,13 +1,20 @@
-import { ImageBackground, StyleSheet, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  ImageBackground,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import {
   SelectorModal,
   SelectorModalOption,
 } from "../components/SelectorModal";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import Button from "../components/Button";
 import Fontisto from "@expo/vector-icons/Fontisto";
 import Location from "../types/Location";
+import LocationsContext from "../context/LocationContext";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import Routes from "../routes";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -15,20 +22,21 @@ import { StatusBar } from "expo-status-bar";
 import TemperatureUnitContext from "../context/TemperatureUnitContext";
 import UnitToggle from "../components/UnitToggle";
 import WeatherInfo from "../components/WeatherInfo";
-import WeatherType from "../types/WeatherType";
 
 export default function MainScreen(props: NativeStackScreenProps<any>) {
   const { navigation } = props;
 
   const temperatureUnit = useContext(TemperatureUnitContext);
+  const locations = useContext(LocationsContext);
+
+  const [selectedLocation, setSelectedLocation] = useState<Location>();
   const [showModal, setShowModal] = useState(false);
-  const [location, setLocation] = useState<Location>({
-    name: "Calgary, AB",
-    temperatureInCelsius: 11,
-    weatherType: WeatherType.PARTLY_SUNNY,
-    latitude: 51.0469212,
-    longitude: -114.0559973,
-  });
+
+  useEffect(() => {
+    if (!selectedLocation) {
+      setSelectedLocation(locations.value[0]);
+    }
+  }, [locations]);
 
   const openModal = () => setShowModal(true);
   const closeModal = () => setShowModal(false);
@@ -43,23 +51,32 @@ export default function MainScreen(props: NativeStackScreenProps<any>) {
       >
         <StatusBar style="light" />
         <SafeAreaView style={styles.container}>
-          <Button
-            label={location.name}
-            palette="light"
-            style={styles.button}
-            onPress={openModal}
-          />
-          <WeatherInfo location={location} style={styles.weatherInfo} />
-          <UnitToggle
-            value={temperatureUnit.value}
-            onChange={temperatureUnit.setValue}
-          />
-          <View style={styles.footer}>
-            <Text style={styles.footerTitle}>Captured at</Text>
-            <Text style={styles.footerText}>
-              {`(${location.latitude}, ${location.longitude})`}
-            </Text>
-          </View>
+          {!selectedLocation ? (
+            <ActivityIndicator color="white" size="large" />
+          ) : (
+            <>
+              <Button
+                label={selectedLocation.name}
+                palette="light"
+                style={styles.button}
+                onPress={openModal}
+              />
+              <WeatherInfo
+                location={selectedLocation}
+                style={styles.weatherInfo}
+              />
+              <UnitToggle
+                value={temperatureUnit.value}
+                onChange={temperatureUnit.setValue}
+              />
+              <View style={styles.footer}>
+                <Text style={styles.footerTitle}>Captured at</Text>
+                <Text style={styles.footerText}>
+                  {`(${selectedLocation.latitude}, ${selectedLocation.longitude})`}
+                </Text>
+              </View>
+            </>
+          )}
         </SafeAreaView>
       </ImageBackground>
       <SelectorModal
