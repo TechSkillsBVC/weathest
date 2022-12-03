@@ -88,9 +88,14 @@ export default function MainScreen(props: NativeStackScreenProps<any>) {
           <Text>Add new</Text>
           <Fontisto name="plus-a" size={15} />
         </SelectorModalOption>
-        <SelectorModalOption onPress={() => {}}>
-          <Text>Calgary, AB</Text>
-        </SelectorModalOption>
+        {locations.value.map((location) => (
+          <SelectorModalOption
+            key={location.id}
+            onPress={() => setSelectedLocation(location)}
+          >
+            <Text>{location.name}</Text>
+          </SelectorModalOption>
+        ))}
       </SelectorModal>
     </>
   );
