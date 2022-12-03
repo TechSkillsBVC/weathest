@@ -15,6 +15,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import TemperatureUnit from "./types/TemperatureUnit";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { getLocations } from "./api/locations";
+import { networkFirst } from "./api/caching";
 
 export default function App() {
   const [temperatureUnit, setTemperatureUnit] = useState<TemperatureUnit>("C");
@@ -31,7 +32,9 @@ export default function App() {
   };
 
   useEffect(() => {
-    getLocations().then((locations) => setLocations(locations));
+    networkFirst("locations", getLocations()).then((locations) =>
+      setLocations(locations)
+    );
   }, []);
 
   const Stack = createNativeStackNavigator();
