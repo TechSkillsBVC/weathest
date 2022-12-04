@@ -12,11 +12,15 @@ import {
 import { useContext, useState } from "react";
 
 import Button from "../components/Button";
+import Location from "../types/location";
+import LocationsContext from "../context/LocationContext";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import NumberInput from "../components/NumberInput";
 import { StatusBar } from "expo-status-bar";
 import TemperatureUnitContext from "../context/TemperatureUnitContext";
 import WeatherIcon from "../components/WeatherIcon";
 import WeatherType from "../types/WeatherType";
+import { postLocation } from "../api/locations";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { toCelsius } from "../utils/temperature";
 
@@ -28,7 +32,9 @@ type FormValue = {
   longitude: number | null;
 };
 
-export default function AddLocationScreen() {
+export default function AddLocationScreen(props: NativeStackScreenProps<any>) {
+  const { navigation } = props;
+  const locationsContext = useContext(LocationsContext);
   const temperatureUnit = useContext(TemperatureUnitContext);
   const headerHeight = useHeaderHeight();
 
@@ -50,8 +56,11 @@ export default function AddLocationScreen() {
     if (hasEmptyValue) {
       Alert.alert("Please fill in all fields.");
     } else {
-      const safePayload = formValue as Omit<LocationWeather, "id">;
-      console.log(JSON.stringify(safePayload, null, 2));
+      const safePayload = formValue as Omit<Location, "id">;
+      postLocation(safePayload).then((response) => {
+        locationsContext.setValue?.([...locationsContext.value, response]);
+        navigation.pop();
+      });
     }
   };
 
