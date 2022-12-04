@@ -10,12 +10,11 @@ import {
 } from "react-native";
 
 import Button from "../components/Button";
+import NumberInput from "../components/NumberInput";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import WeatherIcon from "../components/WeatherIcon";
 import WeatherType from "../types/WeatherType";
-
-const NUM_KEYBOARD = Platform.OS === 'android' ? 'decimal-pad' : 'numbers-and-punctuation';
 
 export default function AddLocationScreen() {
   return (
@@ -62,11 +61,11 @@ export default function AddLocationScreen() {
                 </ScrollView>
               </View>
               <Text style={styles.label}>Temperature (°C)</Text>
-              <TextInput keyboardType={NUM_KEYBOARD} style={[styles.inputBox, styles.input]} />
+              <NumberInput style={[styles.inputBox, styles.input]} />
               <Text style={styles.label}>Latitude</Text>
-              <TextInput keyboardType={NUM_KEYBOARD} style={[styles.inputBox, styles.input]} />
+              <NumberInput style={[styles.inputBox, styles.input]} />
               <Text style={styles.label}>Longitude</Text>
-              <TextInput keyboardType={NUM_KEYBOARD} style={[styles.inputBox, styles.input]} />
+              <NumberInput style={[styles.inputBox, styles.input]} />
             </View>
             <Button
               label="Verify & Submit"
@@ -94,6 +93,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     justifyContent: "space-between",
   },
+  label: {
+    color: "black",
+    fontSize: 13,
+    marginTop: 20,
+    marginBottom: 5,
+    marginLeft: 5,
+  },
   inputBox: {
     borderRadius: 7,
     borderWidth: 1,
@@ -110,18 +116,6 @@ const styles = StyleSheet.create({
   conditionInput: {
     paddingVertical: 13,
     paddingHorizontal: 10,
-  },
-  numberInput: {
-    borderLeftWidth: 1,
-    borderColor: "lightgray",
-    flex: 1,
-  },
-  label: {
-    color: "black",
-    fontSize: 13,
-    marginTop: 20,
-    marginBottom: 5,
-    marginLeft: 5,
   },
   conditionIcons: {
     flexDirection: "row",
