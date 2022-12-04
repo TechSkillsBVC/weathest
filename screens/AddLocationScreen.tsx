@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { useContext, useState } from "react";
 
 import Button from "../components/Button";
 import NumberInput from "../components/NumberInput";
@@ -15,12 +16,35 @@ import { StatusBar } from "expo-status-bar";
 import TemperatureUnitContext from "../context/TemperatureUnitContext";
 import WeatherIcon from "../components/WeatherIcon";
 import WeatherType from "../types/WeatherType";
-import { useContext } from "react";
 import { useHeaderHeight } from "@react-navigation/elements";
+import { toCelsius } from "../utils/temperature";
+
+type FormValue = {
+  name: string | null;
+  temperatureInCelsius: number | null;
+  weatherType: WeatherType | null;
+  latitude: number | null;
+  longitude: number | null;
+};
 
 export default function AddLocationScreen() {
   const temperatureUnit = useContext(TemperatureUnitContext);
   const headerHeight = useHeaderHeight();
+
+  const [formValue, setFormValue] = useState<FormValue>({
+    name: null,
+    temperatureInCelsius: null,
+    weatherType: null,
+    latitude: null,
+    longitude: null,
+  });
+
+  const setPartialFormValue = (partialObj: Partial<FormValue>) => {
+    const newValue = { ...formValue, ...partialObj };
+    setFormValue(newValue);
+  };
+
+  const submit = () => console.log(JSON.stringify(formValue, null, 2));
 
   return (
     <>
@@ -34,50 +58,64 @@ export default function AddLocationScreen() {
           <ScrollView contentContainerStyle={styles.scrollViewContentContainer}>
             <View>
               <Text style={styles.label}>Location name</Text>
-              <TextInput style={[styles.inputBox, styles.input]} />
+              <TextInput
+                style={[styles.inputBox, styles.input]}
+                onChangeText={(name) => setPartialFormValue({ name })}
+              />
               <Text style={styles.label}>Condition</Text>
               <View style={[styles.inputBox, styles.conditionInput]}>
                 <ScrollView horizontal>
                   <View style={styles.conditionIcons}>
-                    <TouchableOpacity style={styles.conditionIcon}>
-                      <WeatherIcon type={WeatherType.SUNNY} size={25} />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      style={[
-                        styles.conditionIcon,
-                        styles.conditionIconSelected,
-                      ]}
-                    >
-                      <WeatherIcon type={WeatherType.PARTLY_SUNNY} size={25} />
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.conditionIcon}>
-                      <WeatherIcon type={WeatherType.CLOUDY} size={25} />
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.conditionIcon}>
-                      <WeatherIcon type={WeatherType.RAINY} size={25} />
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.conditionIcon}>
-                      <WeatherIcon type={WeatherType.THUNDERSTORM} size={25} />
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.conditionIcon}>
-                      <WeatherIcon type={WeatherType.SNOW} size={25} />
-                    </TouchableOpacity>
+                    {Object.values(WeatherType).map((type) => (
+                      <TouchableOpacity
+                        key={type}
+                        onPress={() =>
+                          setPartialFormValue({ weatherType: type })
+                        }
+                        style={[
+                          styles.conditionIcon,
+                          formValue.weatherType === type
+                            ? styles.conditionIconSelected
+                            : null,
+                        ]}
+                      >
+                        <WeatherIcon type={type} size={25} />
+                      </TouchableOpacity>
+                    ))}
                   </View>
                 </ScrollView>
               </View>
               <Text style={styles.label}>
                 Temperature (°{temperatureUnit.value})
               </Text>
-              <NumberInput style={[styles.inputBox, styles.input]} />
+              <NumberInput
+                style={[styles.inputBox, styles.input]}
+                onChangeValue={(val) => {
+                  if (val === null) {
+                    setPartialFormValue({ temperatureInCelsius: null });
+                  } else {
+                    const temperatureInCelsius =
+                      temperatureUnit.value === "C" ? val : toCelsius(val);
+                    setPartialFormValue({ temperatureInCelsius });
+                  }
+                }}
+              />
               <Text style={styles.label}>Latitude</Text>
-              <NumberInput style={[styles.inputBox, styles.input]} />
+              <NumberInput
+                style={[styles.inputBox, styles.input]}
+                onChangeValue={(val) => setPartialFormValue({ latitude: val })}
+              />
               <Text style={styles.label}>Longitude</Text>
-              <NumberInput style={[styles.inputBox, styles.input]} />
+              <NumberInput
+                style={[styles.inputBox, styles.input]}
+                onChangeValue={(val) => setPartialFormValue({ longitude: val })}
+              />
             </View>
             <Button
               label="Verify & Submit"
               palette="dark"
               style={styles.button}
+              onPress={submit}
             />
           </ScrollView>
         </KeyboardAvoidingView>
