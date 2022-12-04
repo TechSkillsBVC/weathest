@@ -1,4 +1,5 @@
 import {
+  Alert,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
@@ -44,7 +45,15 @@ export default function AddLocationScreen() {
     setFormValue(newValue);
   };
 
-  const submit = () => console.log(JSON.stringify(formValue, null, 2));
+  const submit = () => {
+    const hasEmptyValue = Object.values(formValue).some((val) => val == null);
+    if (hasEmptyValue) {
+      Alert.alert("Please fill in all fields.");
+    } else {
+      const safePayload = formValue as Omit<LocationWeather, "id">;
+      console.log(JSON.stringify(safePayload, null, 2));
+    }
+  };
 
   return (
     <>
