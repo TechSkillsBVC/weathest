@@ -16,9 +16,11 @@ import TemperatureUnitContext from "../context/TemperatureUnitContext";
 import WeatherIcon from "../components/WeatherIcon";
 import WeatherType from "../types/WeatherType";
 import { useContext } from "react";
+import { useHeaderHeight } from "@react-navigation/elements";
 
 export default function AddLocationScreen() {
   const temperatureUnit = useContext(TemperatureUnitContext);
+  const headerHeight = useHeaderHeight();
 
   return (
     <>
@@ -27,7 +29,7 @@ export default function AddLocationScreen() {
         <KeyboardAvoidingView
           style={styles.keyboardAvoidingView}
           behavior={Platform.OS === "ios" ? "padding" : "height"}
-          keyboardVerticalOffset={10}
+          keyboardVerticalOffset={10 + headerHeight}
         >
           <ScrollView contentContainerStyle={styles.scrollViewContentContainer}>
             <View>
