@@ -1,3 +1,5 @@
+import * as ExpoLocation from "expo-location";
+
 import {
   Alert,
   KeyboardAvoidingView,
@@ -9,7 +11,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import Button from "../components/Button";
 import Location from "../types/location";
@@ -50,6 +52,22 @@ export default function AddLocationScreen(props: NativeStackScreenProps<any>) {
     const newValue = { ...formValue, ...partialObj };
     setFormValue(newValue);
   };
+
+  useEffect(() => {
+    ExpoLocation.requestForegroundPermissionsAsync().then((status) => {
+      if (!status.granted) {
+        console.log("Permission to access location was denied");
+        return;
+      }
+
+      ExpoLocation.getCurrentPositionAsync().then(({ coords }) => {
+        setPartialFormValue({
+          latitude: coords.latitude,
+          longitude: coords.longitude,
+        });
+      });
+    });
+  }, []);
 
   const submit = () => {
     const hasEmptyValue = Object.values(formValue).some((val) => val == null);
@@ -120,11 +138,13 @@ export default function AddLocationScreen(props: NativeStackScreenProps<any>) {
               />
               <Text style={styles.label}>Latitude</Text>
               <NumberInput
+                value={formValue.latitude}
                 style={[styles.inputBox, styles.input]}
                 onChangeValue={(val) => setPartialFormValue({ latitude: val })}
               />
               <Text style={styles.label}>Longitude</Text>
               <NumberInput
+                value={formValue.longitude}
                 style={[styles.inputBox, styles.input]}
                 onChangeValue={(val) => setPartialFormValue({ longitude: val })}
               />
