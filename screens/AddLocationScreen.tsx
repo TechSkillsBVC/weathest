@@ -1,4 +1,5 @@
 import * as ExpoLocation from "expo-location";
+import * as ImagePicker from "expo-image-picker";
 
 import {
   Alert,
@@ -69,16 +70,23 @@ export default function AddLocationScreen(props: NativeStackScreenProps<any>) {
     });
   }, []);
 
-  const submit = () => {
+  const submit = async () => {
     const hasEmptyValue = Object.values(formValue).some((val) => val == null);
     if (hasEmptyValue) {
       Alert.alert("Please fill in all fields.");
     } else {
-      const safePayload = formValue as Omit<Location, "id">;
-      postLocation(safePayload).then((response) => {
+      try {
+        // We've already checked that no props are null or undefined so it's safe to
+        // cast `formValue` as `Location` (without `id`).
+        const safePayload = formValue as Omit<Location, "id">;
+        const fileUri = await getVerificationPictureUri();
+        const response = await postLocation(safePayload, fileUri);
         locationsContext.setValue?.([...locationsContext.value, response]);
         navigation.pop();
-      });
+      } catch (e) {
+        const msg = e instanceof Error ? e.message : String(e);
+        Alert.alert("Error", msg);
+      }
     }
   };
 
@@ -160,6 +168,21 @@ export default function AddLocationScreen(props: NativeStackScreenProps<any>) {
       </View>
     </>
   );
+}
+
+async function getVerificationPictureUri(): Promise<string> {
+  const permission = await ImagePicker.requestCameraPermissionsAsync();
+  if (!permission.granted) {
+    throw new Error("Please grant camera access for verification.");
+  } else {
+    const pick = await ImagePicker.launchCameraAsync();
+    const fileUri = pick.assets?.[0]?.uri;
+    if (!fileUri) {
+      throw new Error("Please select a picture to verify your readings.");
+    } else {
+      return fileUri;
+    }
+  }
 }
 
 const styles = StyleSheet.create({
