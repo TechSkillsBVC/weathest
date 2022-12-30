@@ -19,6 +19,7 @@ export default function NumberInput(props: NumberInputProps) {
 
   return (
     <TextInput
+      testID="input"
       keyboardType={NUM_KEYBOARD}
       value={internalVal}
       {...rest}
@@ -44,9 +45,9 @@ function removeNonNumericChars(text: string): string {
   for (let chr of text) {
     if (
       // it's a dash at the very beginning
-      chr === "-" && !sanitized ||
+      (chr === "-" && !sanitized) ||
       // it's the very first dot
-      chr === "." && !sanitized.includes(".") ||
+      (chr === "." && !sanitized.includes(".")) ||
       // it's a digit
       !isNaN(parseInt(chr, 10))
     ) {
