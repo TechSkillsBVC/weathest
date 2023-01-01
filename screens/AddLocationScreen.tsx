@@ -146,12 +146,14 @@ export default function AddLocationScreen(props: NativeStackScreenProps<any>) {
               />
               <Text style={styles.label}>Latitude</Text>
               <NumberInput
+                accessibilityLabel="Latitude"
                 value={formValue.latitude}
                 style={[styles.inputBox, styles.input]}
                 onChangeValue={(val) => setPartialFormValue({ latitude: val })}
               />
               <Text style={styles.label}>Longitude</Text>
               <NumberInput
+                accessibilityLabel="Longitude"
                 value={formValue.longitude}
                 style={[styles.inputBox, styles.input]}
                 onChangeValue={(val) => setPartialFormValue({ longitude: val })}
