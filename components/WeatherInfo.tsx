@@ -9,10 +9,12 @@ import { toFahrenheit } from "../utils/temperature";
 import { useContext } from "react";
 
 export type WeatherInfoProps = {
+  /** Location data to be displayed. */
   location: Omit<Location, "latitude" | "longitude">;
   style?: ViewProps["style"];
 };
 
+/** A component for displaying weather information for a given location. */
 export default function WeatherInfo(props: WeatherInfoProps) {
   const { location } = props;
   const temperatureUnit = useContext(TemperatureUnitContext);

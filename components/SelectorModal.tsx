@@ -5,12 +5,19 @@ type SelectorModalContextObj = { onClose?: () => void };
 export const SelectorModalContext = createContext<SelectorModalContextObj>({});
 
 type SelectorModalProps = {
+  /** Text to be displayed on the top of the modal. */
   header: string;
+  /** Controls modal visibility. */
   visible: boolean;
   children: ReactNode;
+  /** Callback that is called when the modal closes. */
   onClose?: () => void;
 };
 
+/**
+ * A standard component for displaying a popup modal with options.
+ * @see {@link SelectorModalOption}
+ */
 export function SelectorModal(props: SelectorModalProps) {
   const { header, visible, children, onClose } = props;
 
@@ -37,9 +44,14 @@ export function SelectorModal(props: SelectorModalProps) {
 
 type SelectorModalOptionProps = {
   children: ReactNode;
+  /** Callback that is called when the option is pressed. */
   onPress: () => void;
 };
 
+
+/**
+ * A standard component for displaying an option inside {@link SelectorModal}.
+ */
 export function SelectorModalOption(props: SelectorModalOptionProps) {
   const { children, onPress } = props;
   const contextObj = useContext(SelectorModalContext);

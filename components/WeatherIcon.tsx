@@ -3,8 +3,15 @@ import Fontisto from "@expo/vector-icons/Fontisto";
 import WeatherType from "../types/WeatherType";
 
 type FontistoProps = ComponentProps<typeof Fontisto>;
-type WeatherIconProps = { type: WeatherType } & Omit<FontistoProps, "name">;
+type WeatherIconProps = {
+  /** The type of weather to be represented by the icon. */
+  type: WeatherType
+} & Omit<FontistoProps, "name">;
 
+/**
+ * A component for displaying an icon representing any of the weather types
+ * supported by the app.
+ */
 export default function WeatherIcon(props: WeatherIconProps) {
   const { type, ...rest } = props;
   const name = getIconName(type);

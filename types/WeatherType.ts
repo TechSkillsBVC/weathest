@@ -1,3 +1,4 @@
+/** Represent the different weather types supported by the app. */
 enum WeatherType {
   SUNNY = "sunny",
   PARTLY_SUNNY = "partly_sunny",

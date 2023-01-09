@@ -35,6 +35,7 @@ type FormValue = {
   longitude: number | null;
 };
 
+/** A screen that allows user to enter new location data. */
 export default function AddLocationScreen(props: NativeStackScreenProps<any>) {
   const { navigation } = props;
   const locationsContext = useContext(LocationsContext);

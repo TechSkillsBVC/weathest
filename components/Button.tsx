@@ -6,10 +6,13 @@ import {
 } from "react-native";
 
 type ButtonProps = {
+  /** Text displayed inside button. */
   label: string;
+  /** Color palette used by button. */
   palette: "light" | "dark";
 } & TouchableOpacityProps;
 
+/** A standardized button component to be used throughout the app. */
 export default function Button(props: ButtonProps) {
   const { label, palette, ...rest } = props;
 

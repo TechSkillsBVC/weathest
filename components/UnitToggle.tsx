@@ -3,9 +3,17 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import TemperatureUnit from "../types/TemperatureUnit";
 
 type UnitToggleProps = {
+  /** The unit of measure to be displayed as selected. */
   value: TemperatureUnit;
+  /** Callback that is called when the selected unit of measure changes. */
   onChange?: (newValue: TemperatureUnit) => void;
 };
+
+/**
+ * A component for toggling between C and F as units of measure.
+ * @param props 
+ * @returns 
+ */
 export default function UnitToggle(props: UnitToggleProps) {
   const { value, onChange } = props;
 

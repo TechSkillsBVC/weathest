@@ -23,6 +23,10 @@ import TemperatureUnitContext from "../context/TemperatureUnitContext";
 import UnitToggle from "../components/UnitToggle";
 import WeatherInfo from "../components/WeatherInfo";
 
+/**
+ * A screen displaying the weather information for the location currently
+ * loaded.
+ */
 export default function MainScreen(props: NativeStackScreenProps<any>) {
   const { navigation } = props;
 
