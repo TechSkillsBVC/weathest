@@ -44,6 +44,8 @@ function removeNonNumericChars(text: string): string {
   let sanitized = "";
   for (let chr of text) {
     if (
+      // it's a dash at the very beginning
+      (chr === "-" && !sanitized) ||
       // it's the very first dot
       (chr === "." && !sanitized.includes(".")) ||
       // it's a digit
