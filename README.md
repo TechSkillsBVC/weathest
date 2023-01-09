@@ -2,6 +2,9 @@
 
 A simple weather app serving crowdsourced data.
 
+https://user-images.githubusercontent.com/118875477/211240379-9ebfa947-65c2-46e9-9241-1749e765eb92.mp4
+
+
 ## Installation
 
 The app is not released in the app stores. If you want to run it, follow the [setup instructions for developers](#setup).
