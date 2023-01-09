@@ -65,6 +65,30 @@ describe(NumberInput.name, () => {
       });
     });
 
+    describe("negative decimal", () => {
+      beforeEach(() => fireEvent.changeText(input, "-50.5"));
+
+      it("calls `onChangeValue` prop", () => {
+        expect(changeValueHandler).toBeCalledWith(-50.5);
+      });
+
+      it("displays value", () => {
+        expect(input).toHaveProp("value", "-50.5");
+      });
+    });
+
+    describe("invalid number --482", () => {
+      beforeEach(() => fireEvent.changeText(input, "--482"));
+
+      it("calls `onChangeValue` prop with sanitized value", () => {
+        expect(changeValueHandler).toBeCalledWith(-482);
+      });
+
+      it("displays sanitized value", () => {
+        expect(input).toHaveProp("value", "-482");
+      });
+    });
+
     describe("invalid number 45-8", () => {
       beforeEach(() => fireEvent.changeText(input, "45-8"));
 
